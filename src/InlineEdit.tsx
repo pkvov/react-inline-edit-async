@@ -33,6 +33,7 @@ interface InlineEditProps {
   valueKey?: string
   labelKey?: string
   disableClick?: boolean
+  ref?: React.RefObject<React.Component>
 }
 
 const InlineEdit: React.FC<InlineEditProps> = ({
@@ -122,6 +123,7 @@ const InlineEdit: React.FC<InlineEditProps> = ({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const sendClick = () => {
+    alert('CLICK');
     send('CLICK');
   }
 
