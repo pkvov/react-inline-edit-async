@@ -123,6 +123,9 @@ const InlineEdit: React.FC<InlineEditProps> = React.forwardRef(({
     sendClick() {
       send('CLICK');
     },
+    getCurrentState() {
+      return current.value;
+    }
   }));
 
   //==========================
