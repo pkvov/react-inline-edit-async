@@ -32,6 +32,7 @@ interface InlineEditProps {
   options?: any[]
   valueKey?: string
   labelKey?: string
+  disableClick?: boolean
 }
 
 const InlineEdit: React.FC<InlineEditProps> = ({
@@ -59,6 +60,7 @@ const InlineEdit: React.FC<InlineEditProps> = ({
   options = [],
   valueKey = 'value',
   labelKey = 'label',
+  disableClick = false,
 }) => {
   //==========================
   // XState Machine
@@ -115,6 +117,10 @@ const InlineEdit: React.FC<InlineEditProps> = ({
     } else if (event.keyCode === 27) {
       send('ESC')
     }
+  }
+
+  function sendClick() {
+    send('CLICK');
   }
 
   //==========================
@@ -194,15 +200,20 @@ const InlineEdit: React.FC<InlineEditProps> = ({
         current.value === 'loading' ||
         current.value === 'saved' ||
         current.value === 'error') && (
-        <span
-          {...viewClassProp}
-          onClick={() => send('CLICK')}
-          onFocus={() => send('FOCUS')}
-          tabIndex={0}
-        >
-          {render ? render(viewValue) : viewValue}
-        </span>
-      )}
+          <span
+            {...viewClassProp}
+            onClick={() => {
+              if (!disableClick) {
+                send('CLICK')
+              }
+            }
+            }
+            onFocus={() => send('FOCUS')}
+            tabIndex={0}
+          >
+            {render ? render(viewValue) : viewValue}
+          </span>
+        )}
       {current.value === 'edit' && (
         <Input
           type={type}
