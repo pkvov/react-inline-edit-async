@@ -119,6 +119,8 @@ const InlineEdit: React.FC<InlineEditProps> = ({
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   function sendClick() {
     send('CLICK');
   }
