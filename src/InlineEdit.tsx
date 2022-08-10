@@ -33,10 +33,9 @@ interface InlineEditProps {
   valueKey?: string
   labelKey?: string
   disableClick?: boolean
-  ref?: React.RefObject<React.Component>
 }
 
-const InlineEdit: React.FC<InlineEditProps> = ({
+const InlineEdit: React.FC<InlineEditProps> = React.forwardRef(({
   value,
   onChange,
   type = InputType.Text,
@@ -62,7 +61,7 @@ const InlineEdit: React.FC<InlineEditProps> = ({
   valueKey = 'value',
   labelKey = 'label',
   disableClick = false,
-}) => {
+}, ref) => {
   //==========================
   // XState Machine
   // =========================
@@ -120,12 +119,11 @@ const InlineEdit: React.FC<InlineEditProps> = ({
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const sendClick = () => {
-    alert('CLICK');
-    send('CLICK');
-  }
+  React.useImperativeHandle(ref, () => ({
+    sendClick() {
+      send('CLICK');
+    },
+  }));
 
   //==========================
   // CSS Classes View
@@ -234,6 +232,6 @@ const InlineEdit: React.FC<InlineEditProps> = ({
       )}
     </>
   )
-}
+})
 
 export default InlineEdit
